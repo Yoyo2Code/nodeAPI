@@ -7,3 +7,11 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 let should = chai.should();
+
+chai.use(chaiHttp);
+describe('Books', () => {
+    beforeEach((done) => { //Before each test empty the database
+        Book.remove({}, (err) => {
+           done();
+        });
+    });
