@@ -42,5 +42,14 @@ function getBook(req, res) {
     });
 }
 
+/*
+ * DELETE /book/:id to delete a book given its id.
+ */
+function deleteBook(req, res) {
+    Book.remove({_id : req.params.id}, (err, result) => {
+        res.json({ message: "Book successfully deleted!", result });
+    });
+}
+
 //export all the functions
 module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
