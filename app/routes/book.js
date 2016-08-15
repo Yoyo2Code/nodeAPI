@@ -31,5 +31,16 @@ function postBook(req, res) {
     });
 }
 
+/*
+ * GET /book/:id route to retrieve a book given its id.
+ */
+function getBook(req, res) {
+    Book.findById(req.params.id, (err, book) => {
+        if(err) res.send(err);
+        //If no errors, send it back to the client
+        res.json(book);
+    });
+}
+
 //export all the functions
 module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
