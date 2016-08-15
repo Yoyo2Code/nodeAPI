@@ -10,7 +10,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 describe('Books', () => {
-    beforeEach((done) => { //Before each test empty the database
+    beforeEach((done) => {
         Book.remove({}, (err) => {
            done();
         });
