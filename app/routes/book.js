@@ -51,5 +51,18 @@ function deleteBook(req, res) {
     });
 }
 
+/*
+ * PUT /book/:id to updatea a book given its id
+ */
+function updateBook(req, res) {
+    Book.findById({_id: req.params.id}, (err, book) => {
+        if(err) res.send(err);
+        Object.assign(book, req.body).save((err, book) => {
+            if(err) res.send(err);
+            res.json({ message: 'Book updated!', book });
+        });
+    });
+}
+
 //export all the functions
 module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
