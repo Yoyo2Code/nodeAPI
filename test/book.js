@@ -18,7 +18,7 @@ describe('Books', () => {
     });
   describe('/GET book', () => {
       it('it should GET all the books', (done) => {
-        chai.request(server)
+            chai.request(server)
             .get('/book')
             .end((err, res) => {
                 res.should.have.status(200);
@@ -28,7 +28,6 @@ describe('Books', () => {
             });
       });
   });
-
   describe('/POST book', () => {
       it('it should not POST a book without pages field', (done) => {
         let book = {
@@ -36,7 +35,7 @@ describe('Books', () => {
             author: "J.R.R. Tolkien",
             year: 1954
         }
-        chai.request(server)
+            chai.request(server)
             .post('/book')
             .send(book)
             .end((err, res) => {
@@ -55,7 +54,7 @@ describe('Books', () => {
             year: 1954,
             pages: 1170
         }
-        chai.request(server)
+            chai.request(server)
             .post('/book')
             .send(book)
             .end((err, res) => {
@@ -68,6 +67,28 @@ describe('Books', () => {
                 res.body.book.should.have.property('year');
               done();
             });
+      });
+  });
+
+  describe('/GET/:id book', () => {
+      it('it should GET a book by the given id', (done) => {
+        let book = new Book({ title: "The Lord of the Rings", author: "J.R.R. Tolkien", year: 1954, pages: 1170 });
+        book.save((err, book) => {
+            chai.request(server)
+            .get('/book/' + book.id)
+            .send(book)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('title');
+                res.body.should.have.property('author');
+                res.body.should.have.property('pages');
+                res.body.should.have.property('year');
+                res.body.should.have.property('_id').eql(book.id);
+              done();
+            });
+        });
+
       });
   });
 });
